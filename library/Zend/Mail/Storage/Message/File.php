@@ -68,4 +68,11 @@ class File extends Part\File implements MessageInterface
     {
         return $this->flags;
     }
+    
+    
+    public function getFilename() {
+        $meta_data = stream_get_meta_data($this->fh);
+        return $meta_data["uri"];
+    }
+
 }
