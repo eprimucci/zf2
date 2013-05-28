@@ -23,7 +23,7 @@ use Zend\Loader\PluginClassLocator;
 class Headers implements Countable, Iterator
 {
     /** @var string End of Line for fields */
-    const EOL = "\r\n";
+    const EOL = PHP_EOL;
 
     /** @var string Start of Line when folding */
     const FOLDING = "\r\n ";
@@ -68,7 +68,7 @@ class Headers implements Countable, Iterator
         $currentLine = '';
 
         // iterate the header lines, some might be continuations
-        foreach (explode($EOL, $string) as $line) {
+        foreach (preg_split('/\r\n|\r|\n/', $string) as $line) { 
             // check if a header name is present
             if (preg_match('/^(?P<name>[\x21-\x39\x3B-\x7E]+):.*$/', $line, $matches)) {
                 if ($currentLine) {
