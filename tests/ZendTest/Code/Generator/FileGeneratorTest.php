@@ -10,6 +10,7 @@
 
 namespace ZendTest\Code\Generator;
 
+use Exception;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\FileReflection;
@@ -297,5 +298,11 @@ EOS;
         ));
         $class = $fileGenerator->getClass('bar');
         $this->assertInstanceOf('Zend\Code\Generator\ClassGenerator', $class);
+    }
+
+    public function testGeneratingFromAReflectedFileName()
+    {
+        $generator = FileGenerator::fromReflectedFileName(__DIR__ . '/TestAsset/OneInterface.php');
+        $this->assertInstanceOf('Zend\Code\Generator\FileGenerator', $generator);
     }
 }

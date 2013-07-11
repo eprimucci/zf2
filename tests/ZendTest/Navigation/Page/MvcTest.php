@@ -631,4 +631,109 @@ class MvcTest extends TestCase
         $page->setUseRouteMatch(true);
         $this->assertEquals('/lmaoplane/index', $page->getHref());
     }
+
+    public function testMistakeDetectIsActiveOnIndexController()
+    {
+        $page = new Page\Mvc(
+            array(
+                'label' => 'some Label',
+                'route' => 'myRoute',
+            )
+        );
+
+        $route = new LiteralRoute('/foo');
+
+        $router = new TreeRouteStack;
+        $router->addRoute('myRoute', $route);
+
+        $routeMatch = new RouteMatch(
+            array(
+                ModuleRouteListener::MODULE_NAMESPACE => 'Application\Controller',
+                'controller' => 'index',
+                'action' => 'index'
+            )
+        );
+        $routeMatch->setMatchedRouteName('index');
+
+        $event = new MvcEvent();
+        $event->setRouter($router)
+            ->setRouteMatch($routeMatch);
+
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->onRoute($event);
+
+        $page->setRouter($event->getRouter());
+        $page->setRouteMatch($event->getRouteMatch());
+
+        $this->assertFalse($page->isActive());
+    }
+
+    public function testRecursiveDetectIsActiveWhenRouteNameIsKnown()
+    {
+        $parentPage = new Page\Mvc(
+            array(
+                'label' => 'some Label',
+                'route' => 'parentPageRoute',
+            )
+        );
+        $childPage = new Page\Mvc(
+            array(
+                'label' => 'child',
+                'route' => 'childPageRoute',
+            )
+        );
+        $parentPage->addPage($childPage);
+
+        $router = new TreeRouteStack;
+        $router->addRoutes(
+            array(
+                'parentPageRoute' => array(
+                    'type' => 'literal',
+                    'options' => array(
+                        'route' => '/foo',
+                        'defaults' => array(
+                            'controller' => 'fooController',
+                            'action' => 'fooAction'
+                        )
+                    )
+                ),
+                'childPageRoute' => array(
+                    'type' => 'literal',
+                    'options' => array(
+                        'route' => '/bar',
+                        'defaults' => array(
+                            'controller' => 'barController',
+                            'action' => 'barAction'
+                        )
+                    )
+                )
+            )
+        );
+
+        $routeMatch = new RouteMatch(
+            array(
+                ModuleRouteListener::MODULE_NAMESPACE => 'Application\Controller',
+                'controller' => 'barController',
+                'action' => 'barAction'
+            )
+        );
+        $routeMatch->setMatchedRouteName('childPageRoute');
+
+        $event = new MvcEvent();
+        $event->setRouter($router)
+            ->setRouteMatch($routeMatch);
+
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->onRoute($event);
+
+        $parentPage->setRouter($event->getRouter());
+        $parentPage->setRouteMatch($event->getRouteMatch());
+
+        $childPage->setRouter($event->getRouter());
+        $childPage->setRouteMatch($event->getRouteMatch());
+
+        $this->assertTrue($childPage->isActive(true));
+        $this->assertTrue($parentPage->isActive(true));
+
+    }
 }
