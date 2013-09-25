@@ -207,7 +207,7 @@ class Headers implements Countable, Iterator
         if ($fieldValue === null) {
             $genericHeader = Header\GenericHeader::fromString($headerFieldNameOrLine);
             if ($genericHeader !== false) {
-                $this->addHeader();
+                $this->addHeader($genericHeader);
             }
         } elseif (is_array($fieldValue)) {
             foreach ($fieldValue as $i) {
