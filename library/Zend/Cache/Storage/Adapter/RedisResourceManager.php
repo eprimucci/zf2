@@ -10,7 +10,6 @@
 namespace Zend\Cache\Storage\Adapter;
 
 use Redis as RedisResource;
-use RedisException as RedisResourceException;
 use ReflectionClass;
 use Traversable;
 use Zend\Cache\Exception;
@@ -479,7 +478,7 @@ class RedisResourceManager
     {
         if (!$this->hasResource($id)) {
             return $this->setResource($id, array(
-                'database' => (int)$database,
+                'database' => (int) $database,
             ));
         }
 
@@ -508,18 +507,32 @@ class RedisResourceManager
     /**
      * Get redis server version
      *
+     * @deprecated 2.2.2 Use getMajorVersion instead
+     *
      * @param string $id
      * @return int
      * @throws Exception\RuntimeException
      */
     public function getMayorVersion($id)
     {
+        return $this->getMajorVersion($id);
+    }
+
+    /**
+     * Get redis server version
+     *
+     * @param string $id
+     * @return int
+     * @throws Exception\RuntimeException
+     */
+    public function getMajorVersion($id)
+    {
         if (!$this->hasResource($id)) {
             throw new Exception\RuntimeException("No resource with id '{$id}'");
         }
 
         $resource = & $this->resources[$id];
-        return (int)$resource['version'];
+        return (int) $resource['version'];
     }
 
     /**

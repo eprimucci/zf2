@@ -5,7 +5,6 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Form
  */
 
 namespace ZendTest\Form\Element;
@@ -13,7 +12,6 @@ namespace ZendTest\Form\Element;
 use DateTime;
 use PHPUnit_Framework_TestCase as TestCase;
 use Zend\Form\Element\MonthSelect as MonthSelectElement;
-use Zend\Form\Factory;
 
 class MonthSelectTest extends TestCase
 {

@@ -42,7 +42,8 @@ abstract class AbstractHelper extends BaseAbstractHelper
      * @var array
      */
     protected $translatableAttributes = array(
-        'placeholder' => true
+        'placeholder' => true,
+        'title' => true,
     );
 
     /**
@@ -129,6 +130,7 @@ abstract class AbstractHelper extends BaseAbstractHelper
         'ontimeupdate'       => true,
         'onvolumechange'     => true,
         'onwaiting'          => true,
+        'role'               => true,
         'spellcheck'         => true,
         'style'              => true,
         'tabindex'           => true,
@@ -349,6 +351,7 @@ abstract class AbstractHelper extends BaseAbstractHelper
             if (!isset($this->validGlobalAttributes[$attribute])
                 && !isset($this->validTagAttributes[$attribute])
                 && 'data-' != substr($attribute, 0, 5)
+                && 'x-' != substr($attribute, 0, 2)
             ) {
                 // Invalid attribute for the current tag
                 unset($attributes[$key]);

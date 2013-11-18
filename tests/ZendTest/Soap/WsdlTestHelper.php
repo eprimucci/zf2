@@ -5,7 +5,6 @@
 * @link      http://github.com/zendframework/zf2 for the canonical source repository
 * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
 * @license   http://framework.zend.com/license/new-bsd New BSD License
-* @package   Zend_Soap
 */
 
 namespace ZendTest\Soap;
@@ -14,14 +13,10 @@ use Zend\Soap\Wsdl,
     Zend\Soap\Wsdl\ComplexTypeStrategy;
 use Zend\Soap\Wsdl\ComplexTypeStrategy\ComplexTypeStrategyInterface;
 
-use Zend\Uri\Uri;
 
 /**
 * Zend_Soap_Server
 *
-* @category   Zend
-* @package    Zend_Soap
-* @subpackage UnitTests
 * @group      Zend_Soap
 * @group      Zend_Soap_Wsdl
 **/

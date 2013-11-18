@@ -9,7 +9,7 @@
 
 namespace Zend\Cache\Storage\Adapter;
 
-use Redis as RedisResource;
+use Zend\Cache\Exception;
 use Zend\Cache\Storage\Adapter\AdapterOptions;
 
 class RedisOptions extends AdapterOptions
@@ -21,7 +21,7 @@ class RedisOptions extends AdapterOptions
     protected $namespaceSeparator = ':';
 
     /**
-     * The memcached resource manager
+     * The redis resource manager
      *
      * @var null|RedisResourceManager
      */

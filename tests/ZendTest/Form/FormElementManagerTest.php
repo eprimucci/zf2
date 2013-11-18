@@ -5,20 +5,15 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Form
  */
 
 namespace ZendTest\Form;
 
-use Zend\ServiceManager\ServiceManager;
 use Zend\Form\Factory;
 use Zend\Form\Form;
 use Zend\Form\FormElementManager;
 
 /**
- * @category   Zend
- * @package    Zend_Form
- * @subpackage UnitTests
  * @group      Zend_Form
  */
 class FormElementManagerTest extends \PHPUnit_Framework_TestCase
